@@ -10,8 +10,8 @@ public class Item implements ItemInterface {
     boolean onSale;
 
     @Override
-    public void addAnItem(int productID) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public void addAnItem(int productID, int amntAvail, String name, String backgroundLocation, String salesFloorLocation, boolean onSale) {
+        throw new UnsupportedOperationException("Not supported yet.");
         //To change body of generated methods, choose Tools | Templates.
     }
 
