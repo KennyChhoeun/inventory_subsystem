@@ -19,15 +19,38 @@ public class Item implements ItemInterface {
     // I know this is a big security flaw, but its just a project ¯\_(ツ)_/¯
 
     @Override
-    public void addAnItem(int productID, int amntAvail, String name, String backgroundLocation, String salesFloorLocation, boolean onSale) {
-        throw new UnsupportedOperationException("Not supported yet.");
-        //To change body of generated methods, choose Tools | Templates
+    public void addAnItem(int productID, int amntAvail, String name, String backroomLocation, String salesFloorLocation, boolean onSale) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Get connection to database
+            Connection myConnection = DriverManager.getConnection(url,username,pass);
+
+            Statement statement = myConnection.createStatement();
+            // create statement
+            statement.executeUpdate("INSERT INTO Item"
+                                    + " VALUES (" + productID + "," + "\"" + name + "\"" + "," +
+                                    + amntAvail + ","  + "\"" + backroomLocation + "\"" + ","
+                                    + "" + "\"" + salesFloorLocation + "\"" + ");");
+
+            // Process the result set to print out to user
+            System.out.println("Add successful");
+        }catch(Exception e){System.out.println(e);}
     }
 
     @Override
     public void removeAnItem(int productID) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Get connection to database
+            Connection myConnection = DriverManager.getConnection(url,username,pass);
+
+            Statement statement = myConnection.createStatement();
+            // create statement
+            statement.executeUpdate("DELETE FROM Item " + "WHERE productID = " + productID + ";");
+
+            // Process the result set to print out to user
+            System.out.println("remove");
+        }catch(Exception e){System.out.println(e);}
     }
 
     @Override
