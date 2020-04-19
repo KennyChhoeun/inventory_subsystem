@@ -11,7 +11,10 @@ public interface ItemInterface {
     public void putItemOnSale(double oldPrice, double newPrice);
     public void searchItem(int productID, String itemName);
     public boolean isOnSale(int productID, String itemName);
-    public void relocateItem(int productID, String itemName, String newLocation);
+    public void relocateBackroomItem(int productID, String newBackLocation);
+    public void relocateSalesloorItem(int productID, String newSalesLocation);
     public void restock(int amountRestocked);
     public void checkPrice(int productID, String itemName);
+    public void checkBackroomLocation(int productID);
+    public void checkSalesFloorLocation(int productID);
 }

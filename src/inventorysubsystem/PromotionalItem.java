@@ -12,7 +12,7 @@ public class PromotionalItem implements PromotionalItemInterface {
     }
 
     @Override
-    public void addAnItem(int productID, int amntAvail, String name, String backgroundLocation, String salesFloorLocation, boolean onSale) {
+    public void addAnItem(int productID, int amntAvail, String name, String backroomLocation, String salesFloorLocation, boolean onSale) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -42,7 +42,12 @@ public class PromotionalItem implements PromotionalItemInterface {
     }
 
     @Override
-    public void relocateItem(int productID, String itemName, String newLocation) {
+    public void relocateBackroomItem(int productID, String newBackLocation) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void relocateSalesloorItem(int productID, String newSalesLocation) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -53,6 +58,16 @@ public class PromotionalItem implements PromotionalItemInterface {
 
     @Override
     public void checkPrice(int productID, String itemName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void checkBackroomLocation(int productID) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void checkSalesFloorLocation(int productID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
