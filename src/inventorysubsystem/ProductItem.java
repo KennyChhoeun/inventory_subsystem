@@ -10,7 +10,7 @@ public class ProductItem implements ProductItemInterface {
     String url = "jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_a191d5076c9f6e9";
     String username = "b22163d58326e0";
     // Going to remove password when pushing project to GitHub
-    String pass = "64acaecf";
+    String pass = "";
     // I know this is a big security flaw, but its just a project ¯\_(ツ)_/¯
     
     @Override
