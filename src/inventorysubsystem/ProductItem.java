@@ -1,56 +1,88 @@
 package inventorysubsystem;
 
 import java.sql.*;
+import java.util.Vector;
+import javax.swing.table.*;
 /**
  *
  * @author Kenny
  */
 public class ProductItem implements ProductItemInterface {
-
-    String url = "jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_a191d5076c9f6e9";
-    String username = "b22163d58326e0";
-    // Going to remove password when pushing project to GitHub
-    String pass = "";
-    // I know this is a big security flaw, but its just a project ¯\_(ツ)_/¯
+    sqlCreds cred = new sqlCreds();
+    
+    private int productID;
+    private String productName;
+    private int totalQuantity;
+    private double productPrice;
+    private String productDescription;
+    
+    public ProductItem(int productID, String productName, int totalQuantity, double productPrice, String productDescription)
+    {
+        this.productID = productID;
+        this.productName = productName;
+        this.totalQuantity = totalQuantity;
+        this.productPrice = productPrice;
+        this.productDescription = productDescription;
+    }
+    
+    // getters
+    public int getProductID()
+    {
+        return productID;
+    }
+    
+    public String getProductName()
+    {
+        return productName;
+    }
+    
+    public int getTotalQuantity()
+    {
+        return totalQuantity;
+    }
+    public double getProductPrice()
+    {
+        return productPrice;
+    }
+    
+    public String getProductDescription()
+    {
+        return productDescription;
+    }
     
     @Override
-    public void putItemOnSale(int productID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void addAnItem(int productID, int amntAvail, String name, String backroomLocation, String salesFloorLocation, boolean onSale) {
+    public void putItemOnSale(int productID, double discountPercent, String startDate, String endDate) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            // Get connection to database
-            Connection myConnection = DriverManager.getConnection(url,username,pass);
-
-            Statement statement = myConnection.createStatement();
-            // create statement
-            statement.executeUpdate("INSERT INTO Item"
-                                    + " VALUES (" + productID + "," + "\"" + name + "\"" + "," +
-                                    + amntAvail + ","  + "\"" + backroomLocation + "\"" + ","
-                                    + "" + "\"" + salesFloorLocation + "\"" + ");");
-
-            // Process the result set to print out to user
-            System.out.println("Add successful");
+            Connection con = DriverManager.getConnection(cred.getUrl(),cred.getUsername(),cred.getPass());
+            String query = "INSERT INTO saleoffering VALUES(?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, productID);
+            ps.setDouble(2, discountPercent);
+            ps.setString(3, startDate);
+            ps.setString(4, endDate);
+            ps.executeUpdate();
         }catch(Exception e){System.out.println(e);}
     }
 
+    @Override
+    public void addAnItem(int productID, String productName, int totalQuantity, double productPrice, String productDescription) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(cred.getUrl(),cred.getUsername(),cred.getPass());
+            String query = "INSERT INTO productitem VALUES(?,?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, productID);
+            ps.setString(2, productName);
+            ps.setInt(3, totalQuantity);
+            ps.setDouble(4, productPrice);
+            ps.setString(5, productDescription);
+            ps.executeUpdate();
+        }catch(Exception e){System.out.println(e);}
+    }
     @Override
     public void removeAnItem(int productID) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            // Get connection to database
-            Connection myConnection = DriverManager.getConnection(url,username,pass);
-
-            Statement statement = myConnection.createStatement();
-            // create statement
-            statement.executeUpdate("DELETE FROM Item " + "WHERE productID = " + productID + ";");
-
-            // Process the result set to print out to user
-            System.out.println("remove");
-        }catch(Exception e){System.out.println(e);}
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -59,23 +91,22 @@ public class ProductItem implements ProductItemInterface {
     }
 
     @Override
-    public void searchItem(int productID, String itemName) {
+    public void searchItemByID(int productID) {        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            // Get connection to database
-            Connection myConnection = DriverManager.getConnection(url,username,pass);
+            Connection con = DriverManager.getConnection(cred.getUrl(),cred.getUsername(),cred.getPass());
+            Statement stmt=con.createStatement();  
+            String query = "Select * from productitem where productID = " + productID;
+            ResultSet rs=stmt.executeQuery(query);
+            ResultSetMetaData md = rs.getMetaData();            
+            while(rs.next()){
 
-            // create statement
-            Statement addItemStmt = myConnection.createStatement();
-
-            // Execute SQL query
-            ResultSet myRs1 = addItemStmt.executeQuery("Select * from item where productID ="+productID);
-
-            // Process the result set to print out to user
-            while (myRs1.next()) {
-                System.out.println("Search Results: " + myRs1.getString("productName"));
             }
-        }catch(Exception e){System.out.println(e);}    
+            rs.close();
+            stmt.close();
+            con.close();
+            
+        }catch(Exception e){System.out.println(e);}  
     }
 
     @Override
@@ -84,8 +115,16 @@ public class ProductItem implements ProductItemInterface {
     }
 
     @Override
-    public void restock(int amountRestocked) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void restock(int productID, int newTotalQuantity) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(cred.getUrl(),cred.getUsername(),cred.getPass());
+            String query = "UPDATE productitem SET TotalQuantity = ? WHERE ProductID = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, newTotalQuantity);
+            ps.setInt(2, productID);
+            ps.executeUpdate();
+        }catch(Exception e){System.out.println(e);} 
     }
 
     @Override
@@ -110,17 +149,7 @@ public class ProductItem implements ProductItemInterface {
 
     @Override
     public void relocateBackroomItem(int productID, String newBackLocation) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            // Get connection to db
-            Connection myConnection = DriverManager.getConnection(url,username,pass);
-            // create statement
-            Statement statement = myConnection.createStatement();
-            // Execute SQL query
-            statement.executeUpdate("UPDATE item " +
-                                    "SET backroomLocation = " + newBackLocation +
-                                    "WHERE productID = " + productID);
-        }catch(Exception e){System.out.println(e);}
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

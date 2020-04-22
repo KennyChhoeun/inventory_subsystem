@@ -12,7 +12,7 @@ public class PromotionalItem implements PromotionalItemInterface {
     }
 
     @Override
-    public void addAnItem(int productID, int amntAvail, String name, String backroomLocation, String salesFloorLocation, boolean onSale) {
+    public void addAnItem(int productID, String ProductName, int totalQuantity, double productPrice, String productDescription) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -32,7 +32,7 @@ public class PromotionalItem implements PromotionalItemInterface {
     }
 
     @Override
-    public void searchItem(int productID, String itemName) {
+    public void searchItemByID(int productID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -52,7 +52,7 @@ public class PromotionalItem implements PromotionalItemInterface {
     }
 
     @Override
-    public void restock(int amountRestocked) {
+    public void restock(int productID, int amountRestocked) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -70,5 +70,7 @@ public class PromotionalItem implements PromotionalItemInterface {
     public void checkSalesFloorLocation(int productID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     
+
 }

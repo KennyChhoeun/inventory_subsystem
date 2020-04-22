@@ -19,10 +19,8 @@ public class LoginMenu extends javax.swing.JFrame {
         initComponents();
     }
     
-    private static String url = "jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_a191d5076c9f6e9";
-    private static String sql_username = "b22163d58326e0";
-    // Going to remove password when pushing project to GitHub
-    private static String pass = "";
+    // get sql credentials
+    sqlCreds cred = new sqlCreds();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,7 +104,7 @@ public class LoginMenu extends javax.swing.JFrame {
         String password = passwordField.getText();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection myConnection = DriverManager.getConnection(url,sql_username,pass);
+            Connection myConnection = DriverManager.getConnection(cred.getUrl(),cred.getUsername(),cred.getPass());
             PreparedStatement st = (PreparedStatement) myConnection
                     .prepareStatement("Select username, password from employee where username=? and password=?");
             st.setString(1, username);
