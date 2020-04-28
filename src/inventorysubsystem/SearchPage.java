@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package inventorysubsystem;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -18,7 +19,9 @@ import javax.swing.table.TableRowSorter;
  * @author Kenny
  */
 public class SearchPage extends javax.swing.JFrame {
+
     sqlCreds cred = new sqlCreds();
+
     /**
      * Creates new form SearchPage
      */
@@ -27,80 +30,75 @@ public class SearchPage extends javax.swing.JFrame {
         showItemsInTable();
     }
 
-    public Connection getConnection()
-    {
+    public Connection getConnection() {
         Connection con;
         try {
-            con = DriverManager.getConnection(cred.getUrl(),cred.getUsername(),cred.getPass());
+            con = DriverManager.getConnection(cred.getUrl(), cred.getUsername(), cred.getPass());
             return con;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-    
-    public ArrayList<ProductItem> itemList()
-    {
+
+    public ArrayList<ProductItem> itemList() {
         ArrayList<ProductItem> itemsList = new ArrayList<ProductItem>();
         Connection connection = getConnection();
-        String query = "SELECT * FROM productitem ";
+        String query = "SELECT * FROM productitem";
         Statement st;
         ResultSet rs;
-        
-        try{
+
+        try {
             st = connection.createStatement();
             rs = st.executeQuery(query);
             ProductItem item;
-            while(rs.next())
-            {
-                item = new ProductItem(rs.getInt("productID"), rs.getString("ProductName"), rs.getInt("TotalQuantity"),rs.getDouble("ProductPrice"), rs.getString("ProductDescription"), rs.getString("Department"));
+            while (rs.next()) {
+                item = new ProductItem(rs.getInt("productID"), rs.getString("ProductName"), rs.getInt("TotalQuantity"), rs.getDouble("ProductPrice"), rs.getString("ProductDescription"), rs.getString("Department"));
                 itemsList.add(item);
             }
-        } catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return itemsList;
     }
-    
+
     //Display our data in the JTable resultTable
-    public void showItemsInTable()
-    {
+    public void showItemsInTable() {
         ArrayList<ProductItem> list = itemList();
-        DefaultTableModel model = (DefaultTableModel)resultTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) resultTable.getModel();
+        model.setRowCount(0);
         Object[] row = new Object[6];
-        for(int i = 0; i< list.size(); i++)
-        {
+        for (int i = 0; i < list.size(); i++) {
             row[0] = list.get(i).getProductID();
             row[1] = list.get(i).getProductName();
             row[2] = list.get(i).getTotalQuantity();
             row[3] = list.get(i).getProductPrice();
             row[4] = list.get(i).getProductDescription();
             row[5] = list.get(i).getProductDepartment();
-            
+
             model.addRow(row);
         }
     }
-    
-    public void executeSQLQuery(String query, String message)
-    {
+
+    public void executeSQLQuery(String query, String message) {
         Connection con = getConnection();
         Statement st;
-        try{
+        try {
             st = con.createStatement();
-            if((st.executeUpdate(query)) == 1)
-            {
-                DefaultTableModel model = (DefaultTableModel)resultTable.getModel();
+            if ((st.executeUpdate(query)) == 1) {
+                DefaultTableModel model = (DefaultTableModel) resultTable.getModel();
                 model.setRowCount(0);
                 showItemsInTable();
-                JOptionPane.showMessageDialog(null, "Data "+message+" Successfully");
-            }else{
-                JOptionPane.showMessageDialog(null, "Data not " +message);
+                JOptionPane.showMessageDialog(null, "Data " + message + " Successfully");
+            } else {
+                JOptionPane.showMessageDialog(null, "Data not " + message);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Something went wrong");
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -159,12 +157,15 @@ public class SearchPage extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        resultTable.setColumnSelectionAllowed(true);
+        resultTable.getTableHeader().setReorderingAllowed(false);
         resultTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 resultTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(resultTable);
+        resultTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         productIDtxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -223,7 +224,7 @@ public class SearchPage extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel1.setText("Search by Product Name:");
+        jLabel1.setText("Search Product:");
 
         logoutBtn.setText("Logout");
         logoutBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -254,7 +255,7 @@ public class SearchPage extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 274, Short.MAX_VALUE))
+                        .addGap(0, 337, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -340,19 +341,19 @@ public class SearchPage extends javax.swing.JFrame {
         // Diaplay selected row in JTextFields
         int i = resultTable.getSelectedRow();
         TableModel model = resultTable.getModel();
-        productIDtxt.setText(model.getValueAt(i,0).toString());
-        productNametxtField.setText(model.getValueAt(i,1).toString());
-        totalQuantitytxtfield.setText(model.getValueAt(i,2).toString());
-        productPriceTextField.setText(model.getValueAt(i,3).toString());
-        descriptionTextField.setText(model.getValueAt(i,4).toString());
-        departmentTextField.setText(model.getValueAt(i,5) .toString());
+        productIDtxt.setText(model.getValueAt(i, 0).toString());
+        productNametxtField.setText(model.getValueAt(i, 1).toString());
+        totalQuantitytxtfield.setText(model.getValueAt(i, 2).toString());
+        productPriceTextField.setText(model.getValueAt(i, 3).toString());
+        descriptionTextField.setText(model.getValueAt(i, 4).toString());
+        departmentTextField.setText(model.getValueAt(i, 5).toString());
     }//GEN-LAST:event_resultTableMouseClicked
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         String query = "INSERT INTO productitem values(" + productIDtxt.getText() + ",'"
-                         + productNametxtField.getText() + "',"
-                         + totalQuantitytxtfield.getText()+ "," + productPriceTextField.getText() +
-                         ",'" + descriptionTextField.getText() + "', '" + departmentTextField.getText() + "');";
+                + productNametxtField.getText() + "',"
+                + totalQuantitytxtfield.getText() + "," + productPriceTextField.getText()
+                + ",'" + descriptionTextField.getText() + "', '" + departmentTextField.getText() + "');";
         System.out.println(query);
         executeSQLQuery(query, "Inserted");
     }//GEN-LAST:event_addBtnActionPerformed
@@ -365,7 +366,7 @@ public class SearchPage extends javax.swing.JFrame {
 
     private void searchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyReleased
         // TODO add your handling code here:
-        DefaultTableModel table = (DefaultTableModel)resultTable.getModel();
+        DefaultTableModel table = (DefaultTableModel) resultTable.getModel();
         String search = searchField.getText();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(table);
         resultTable.setRowSorter(tr);
@@ -382,8 +383,8 @@ public class SearchPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         String query = "UPDATE productitem SET productName = '"
                 + productNametxtField.getText() + "', totalQuantity = "
-                + totalQuantitytxtfield.getText() + ", productPrice = " + productPriceTextField.getText() + 
-                ", productdescription = '" + descriptionTextField.getText() + "', department = '" + departmentTextField.getText() + "' WHERE productID = " + productIDtxt.getText();
+                + totalQuantitytxtfield.getText() + ", productPrice = " + productPriceTextField.getText()
+                + ", productdescription = '" + descriptionTextField.getText() + "', department = '" + departmentTextField.getText() + "' WHERE productID = " + productIDtxt.getText();
         System.out.println(query);
         executeSQLQuery(query, "Updated");
     }//GEN-LAST:event_updateBtnActionPerformed
