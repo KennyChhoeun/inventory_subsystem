@@ -48,6 +48,11 @@ public class LoginMenu extends javax.swing.JFrame {
                 loginButtonActionPerformed(evt);
             }
         });
+        loginButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                loginButtonKeyPressed(evt);
+            }
+        });
 
         jLabel1.setText("Username");
 
@@ -124,6 +129,10 @@ public class LoginMenu extends javax.swing.JFrame {
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void loginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginButtonKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginButtonKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

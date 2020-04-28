@@ -15,14 +15,16 @@ public class ProductItem implements ProductItemInterface {
     private int totalQuantity;
     private double productPrice;
     private String productDescription;
+    private String productDepartment;
     
-    public ProductItem(int productID, String productName, int totalQuantity, double productPrice, String productDescription)
+    public ProductItem(int productID, String productName, int totalQuantity, double productPrice, String productDescription, String productDepartment)
     {
         this.productID = productID;
         this.productName = productName;
         this.totalQuantity = totalQuantity;
         this.productPrice = productPrice;
         this.productDescription = productDescription;
+        this.productDepartment = productDepartment;
     }
     
     // getters
@@ -48,6 +50,11 @@ public class ProductItem implements ProductItemInterface {
     public String getProductDescription()
     {
         return productDescription;
+    }
+    
+    public String getProductDepartment()
+    {
+        return productDepartment;
     }
     
     @Override
