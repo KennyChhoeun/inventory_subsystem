@@ -13,18 +13,19 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author Kenny
  */
-public class ManageStockrookInventory extends javax.swing.JFrame {
+public class ItemBackroomLocationForm extends javax.swing.JFrame {
     sqlCreds cred = new sqlCreds();
     /**
      * Creates new form ManageSalesFloorInventory
      */
-    public ManageStockrookInventory() {
+    public ItemBackroomLocationForm() {
         initComponents();
         showItemsInTable();
     }
@@ -43,7 +44,7 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
     public ArrayList<itembackroomlocation> itemList() {
         ArrayList<itembackroomlocation> itemsList = new ArrayList<itembackroomlocation>();
         Connection connection = getConnection();
-        String query = "SELECT * FROM itembackroomlocation";
+        String query = "SELECT * FROM itembackroomlocation order by productID";
         Statement st;
         ResultSet rs;
 
@@ -112,11 +113,12 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
         locationtextfield = new javax.swing.JTextField();
         addItemBtn = new javax.swing.JButton();
         deleteItemBtn = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        updateBtn = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         searchField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,14 +130,14 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Product ID", "Location", "Title 3"
+                "Product ID", "Location", "Product Description"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -144,6 +146,11 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        resultTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resultTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(resultTable);
@@ -172,7 +179,12 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Update Item");
+        updateBtn.setText("Update Item");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Back");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -196,6 +208,13 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
 
         jLabel4.setText("Search");
 
+        jButton3.setText("Manage Backroom Locations");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,6 +230,8 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jButton1)
+                            .addGap(38, 38, 38)
+                            .addComponent(jButton3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -220,11 +241,10 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addComponent(jLabel3)
                                 .addComponent(productIDtextField)
-                                .addComponent(locationtextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(addItemBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(deleteItemBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING))))))
+                                .addComponent(locationtextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                                .addComponent(addItemBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(deleteItemBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -233,7 +253,8 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -250,12 +271,13 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(locationtextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                         .addComponent(addItemBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(updateBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(deleteItemBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3))
+                        .addGap(6, 6, 6))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(26, 26, 26))
         );
@@ -275,8 +297,8 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
 
     private void deleteItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemBtnActionPerformed
         // TODO add your handling code here:
-        String query = "DELETE into itembackroomlocation values(" + productIDtextField.getText() + ", " + locationtextfield.getText() + ")";
-        executeSQLQuery(query, "Inserted");
+        String query = "DELETE from itembackroomlocation where productId = " + productIDtextField.getText();
+        executeSQLQuery(query, "Deleted");
     }//GEN-LAST:event_deleteItemBtnActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -299,6 +321,25 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
         tr.setRowFilter(RowFilter.regexFilter(search));
     }//GEN-LAST:event_searchFieldKeyReleased
 
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        // TODO add your handling code here:
+        String query = "UPDATE itembackroomlocation SET productId = " + productIDtextField.getText() + ", backroomlocationID = '" + locationtextfield.getText() + "'";
+        executeSQLQuery(query, "Updated");
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void resultTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resultTableMouseClicked
+        // Diaplay selected row in JTextFields
+        int i = resultTable.getSelectedRow();
+        TableModel model = resultTable.getModel();
+        productIDtextField.setText(model.getValueAt(i, 0).toString());
+        locationtextfield.setText(model.getValueAt(i,1).toString());
+    }//GEN-LAST:event_resultTableMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        new Backroomlocationform().setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -316,21 +357,23 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManageStockrookInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ItemBackroomLocationForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManageStockrookInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ItemBackroomLocationForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManageStockrookInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ItemBackroomLocationForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManageStockrookInventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ItemBackroomLocationForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManageStockrookInventory().setVisible(true);
+                new ItemBackroomLocationForm().setVisible(true);
             }
         });
     }
@@ -350,5 +393,6 @@ public class ManageStockrookInventory extends javax.swing.JFrame {
     private javax.swing.JTextField productIDtextField;
     private javax.swing.JTable resultTable;
     private javax.swing.JTextField searchField;
+    private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
 }
