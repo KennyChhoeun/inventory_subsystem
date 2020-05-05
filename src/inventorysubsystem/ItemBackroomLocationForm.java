@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package inventorysubsystem;
 
 import java.sql.Connection;
@@ -53,7 +48,7 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
             rs = st.executeQuery(query);
             itembackroomlocation item;
             while (rs.next()) {
-                item = new itembackroomlocation(rs.getInt("productID"), rs.getString("BackroomlocationID"));
+                item = new itembackroomlocation(rs.getInt("productID"), rs.getString("BackroomlocationID"), rs.getString("ProductName"));
                 itemsList.add(item);
             }
         } catch (Exception e) {
@@ -67,10 +62,11 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
         ArrayList<itembackroomlocation> list = itemList();
         DefaultTableModel model = (DefaultTableModel) resultTable.getModel();
         model.setRowCount(0);
-        Object[] row = new Object[2];
+        Object[] row = new Object[3];
         for (int i = 0; i < list.size(); i++) {
             row[0] = list.get(i).getProductID();
             row[1] = list.get(i).getProductLocation();
+            row[2] = list.get(i).getProductName();
 
             model.addRow(row);
         }

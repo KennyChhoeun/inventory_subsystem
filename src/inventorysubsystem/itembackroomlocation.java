@@ -3,21 +3,29 @@ package inventorysubsystem;
 public class itembackroomlocation {
     private int productID;
     private String productLocation;
-    
-    public itembackroomlocation(int productID, String productLocation)
+    private String productName;
+
+    public itembackroomlocation(int productID, String productLocation, String productName)
     {
         this.productID = productID;
         this.productLocation = productLocation;
+        this.productName = productName;
     }
-    
+
+
     // getters
     public int getProductID()
     {
         return productID;
     }
-    
+
     public String getProductLocation()
     {
         return productLocation;
+    }
+
+    public String getProductName()
+    {
+        return productName;
     }
 }
