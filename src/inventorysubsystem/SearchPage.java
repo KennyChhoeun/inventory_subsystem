@@ -9,10 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author Kenny
- */
+
 public class SearchPage extends javax.swing.JFrame {
 
     sqlCreds cred = new sqlCreds();

@@ -1,9 +1,6 @@
 package inventorysubsystem;
 
-/**
- *
- * @author inventory subsystem team
- */
+
 public interface ItemInterface {
     public void addAnItem(int productID, String ProductName, int totalQuantity, double productPrice, String productDescription);
     public void removeAnItem(int productID);

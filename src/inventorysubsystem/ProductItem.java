@@ -3,10 +3,7 @@ package inventorysubsystem;
 import java.sql.*;
 import java.util.Vector;
 import javax.swing.table.*;
-/**
- *
- * @author Kenny
- */
+
 public class ProductItem implements ProductItemInterface {
     sqlCreds cred = new sqlCreds();
     

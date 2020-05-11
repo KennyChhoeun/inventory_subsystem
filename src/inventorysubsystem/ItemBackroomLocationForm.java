@@ -11,10 +11,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author Kenny
- */
 public class ItemBackroomLocationForm extends javax.swing.JFrame {
     sqlCreds cred = new sqlCreds();
     /**
@@ -110,11 +106,13 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
         addItemBtn = new javax.swing.JButton();
         deleteItemBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
+        logoutBtn = new javax.swing.JButton();
         searchField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        manageLocationBtn = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        productNametextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,7 +124,7 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Product ID", "Location", "Product Description"
+                "Product ID", "Location", "Product Name"
             }
         ) {
             Class[] types = new Class [] {
@@ -182,17 +180,17 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                backBtnActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Logout");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        logoutBtn.setText("Logout");
+        logoutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                logoutBtnActionPerformed(evt);
             }
         });
 
@@ -204,12 +202,14 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
 
         jLabel4.setText("Search");
 
-        jButton3.setText("Manage Backroom Locations");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        manageLocationBtn.setText("Manage Backroom Locations");
+        manageLocationBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                manageLocationBtnActionPerformed(evt);
             }
         });
+
+        jLabel5.setText("Product Name");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -225,11 +225,11 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButton1)
+                            .addComponent(backBtn)
                             .addGap(38, 38, 38)
-                            .addComponent(jButton3)
+                            .addComponent(manageLocationBtn)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2))
+                            .addComponent(logoutBtn))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
@@ -240,7 +240,9 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
                                 .addComponent(locationtextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                                 .addComponent(addItemBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(deleteItemBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
+                                .addComponent(productNametextField)))))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -248,9 +250,9 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(backBtn)
+                    .addComponent(logoutBtn)
+                    .addComponent(manageLocationBtn))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -267,7 +269,11 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(locationtextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(productNametextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                         .addComponent(addItemBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(updateBtn)
@@ -283,7 +289,8 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
 
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
         // TODO add your handling code here:
-        String query = "INSERT into itembackroomlocation values(" + productIDtextField.getText() + ", '" + locationtextfield.getText() + "')";
+        //String query = "INSERT into itembackroomlocation values(" + productIDtextField.getText() + ", '" + locationtextfield.getText() + "')";
+        String query = "INSERT into itembackroomlocation values(" + productIDtextField.getText() + ", '" + locationtextfield.getText() + "', '" +productNametextField.getText() +"')";
         executeSQLQuery(query, "Inserted");
     }//GEN-LAST:event_addItemBtnActionPerformed
 
@@ -293,20 +300,21 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
 
     private void deleteItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemBtnActionPerformed
         // TODO add your handling code here:
-        String query = "DELETE from itembackroomlocation where productId = " + productIDtextField.getText();
+        //String query = "DELETE from itembackroomlocation where productId = " + productIDtextField.getText();
+        String query = "DELETE from itembackroomlocation where productId = " + productIDtextField.getText() + " AND backroomlocationID = '" +locationtextfield.getText()+ "'";
         executeSQLQuery(query, "Deleted");
     }//GEN-LAST:event_deleteItemBtnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_logoutBtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
         this.dispose();
         new MainMenu().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_backBtnActionPerformed
 
     private void searchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyReleased
         // TODO add your handling code here:
@@ -319,7 +327,7 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
         // TODO add your handling code here:
-        String query = "UPDATE itembackroomlocation SET productId = " + productIDtextField.getText() + ", backroomlocationID = '" + locationtextfield.getText() + "'";
+        String query = "UPDATE itembackroomlocation SET productId = " + productIDtextField.getText() + ", backroomlocationID = '" + locationtextfield.getText() + "', productName = '" +productNametextField.getText()+ "' where productId = " +productIDtextField.getText()+ " AND backroomlocationID = '" +locationtextfield.getText()+ "'";
         executeSQLQuery(query, "Updated");
     }//GEN-LAST:event_updateBtnActionPerformed
 
@@ -329,12 +337,13 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
         TableModel model = resultTable.getModel();
         productIDtextField.setText(model.getValueAt(i, 0).toString());
         locationtextfield.setText(model.getValueAt(i,1).toString());
+        productNametextField.setText(model.getValueAt(i,2).toString());
     }//GEN-LAST:event_resultTableMouseClicked
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void manageLocationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageLocationBtnActionPerformed
         // TODO add your handling code here:
         new Backroomlocationform().setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_manageLocationBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -376,17 +385,19 @@ public class ItemBackroomLocationForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addItemBtn;
+    private javax.swing.JButton backBtn;
     private javax.swing.JButton deleteItemBtn;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField locationtextfield;
+    private javax.swing.JButton logoutBtn;
+    private javax.swing.JButton manageLocationBtn;
     private javax.swing.JTextField productIDtextField;
+    private javax.swing.JTextField productNametextField;
     private javax.swing.JTable resultTable;
     private javax.swing.JTextField searchField;
     private javax.swing.JButton updateBtn;

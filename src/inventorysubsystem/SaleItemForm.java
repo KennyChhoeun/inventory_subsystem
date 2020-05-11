@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package inventorysubsystem;
 
@@ -17,10 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author Kenny
- */
 public class SaleItemForm extends javax.swing.JFrame {
     sqlCreds cred = new sqlCreds();
     /** Creates new form SaleItemManagement */
