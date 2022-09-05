@@ -6,9 +6,18 @@ https://www.youtube.com/watch?v=T5Hey0e2Y_g
 Download the JAR here and select platform independent
 https://dev.mysql.com/downloads/connector/j/
 
-
+Diagrams
 -------------------------------------------------------------------------
+
+![Screenshot](usecase.PNG)
+![Screenshot](databaseschema.PNG)
+![Screenshot](domainclassdiagram.PNG)
+![Screenshot](guiActivityFlow.PNG)
+![Screenshot](activitydiagram.PNG)
+
+
 How the program looks 
+-------------------------------------------------------------------------
 ![Screenshot](login.PNG)
 ![Screenshot](mainmenu.PNG)
 ![Screenshot](manageproducts.PNG)
